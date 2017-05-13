@@ -5,7 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.squareup.otto.Subscribe;
 import com.vpopovic.chataplication2017.dao.ConversationDao;
+import com.vpopovic.chataplication2017.eventbus.OttoBus;
+import com.vpopovic.chataplication2017.eventbus.event.ConversationsUpdatedEvent;
 import com.vpopovic.chataplication2017.model.Conversation;
 import com.vpopovic.chataplication2017.view.ConversationItemView;
 import com.vpopovic.chataplication2017.view.ConversationItemView_;
@@ -31,9 +34,12 @@ public class ConversationAdapter extends BaseAdapter {
     @Bean
     ConversationDao conversationDao;
 
+    @Bean
+    OttoBus bus;
+
     @AfterInject
     void init() {
-        setConversations(conversationDao.getConversations());
+        bus.register(this);
     }
 
     @Override
@@ -53,14 +59,14 @@ public class ConversationAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ConversationItemView conversationItemView;
+        final ConversationItemView conversationItemView;
         if (convertView == null) {
             conversationItemView = ConversationItemView_.build(context);
         } else {
             conversationItemView = (ConversationItemView) convertView;
         }
 
-        conversationItemView.bind(getItem(position));
+        conversationItemView.bind(conversations.get(position));
 
         return conversationItemView;
     }
@@ -68,5 +74,10 @@ public class ConversationAdapter extends BaseAdapter {
     private void setConversations(List<Conversation> conversations) {
         this.conversations = conversations;
         notifyDataSetChanged();
+    }
+
+    @Subscribe
+    public void conversationsUpdated(ConversationsUpdatedEvent event) {
+        setConversations(conversationDao.getConversations());
     }
 }
