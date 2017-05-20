@@ -38,8 +38,12 @@ public class ConversationAdapter extends BaseAdapter {
     OttoBus bus;
 
     @AfterInject
-    void init() {
+     void init() {
         bus.register(this);
+    }
+
+    public void resetConversationFlow() {
+        conversationDao.init();
     }
 
     @Override
@@ -66,18 +70,21 @@ public class ConversationAdapter extends BaseAdapter {
             conversationItemView = (ConversationItemView) convertView;
         }
 
-        conversationItemView.bind(conversations.get(position));
+        conversationItemView.bind(getItem(position));
 
         return conversationItemView;
     }
 
     private void setConversations(List<Conversation> conversations) {
         this.conversations = conversations;
+
+        // notify that data set changed so that the list is refreshed
         notifyDataSetChanged();
     }
 
     @Subscribe
     public void conversationsUpdated(ConversationsUpdatedEvent event) {
         setConversations(conversationDao.getConversations());
+        notifyDataSetChanged();
     }
 }

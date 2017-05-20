@@ -13,12 +13,12 @@
 
         <ImageView
             android:id="@+id/conversationPhoto"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_margin="10dp" />
+            android:layout_width="@dimen/image_large_size"
+            android:layout_height="@dimen/image_large_size"
+            android:layout_margin="@dimen/medium_margin" />
 
         <LinearLayout
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/large_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -28,28 +28,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/primary_text"
-                android:textSize="18sp"/>
+                android:textSize="@dimen/large_text"/>
 
             <TextView
                 android:id="@+id/conversationPreview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/secondary_text"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/medium_text"/>
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/timestamp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginRight="6dp"
-        android:layout_marginEnd="6dp"
-        android:textSize="12sp"/>
 
 </RelativeLayout>

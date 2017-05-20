@@ -1,15 +1,16 @@
 package com.vpopovic.chataplication2017.activity;
 
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.vpopovic.chataplication2017.R;
+import com.vpopovic.chataplication2017.adapter.MessageAdapter;
 import com.vpopovic.chataplication2017.fragment.CreateMessageFragment;
 import com.vpopovic.chataplication2017.model.Conversation;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentByTag;
@@ -27,6 +28,9 @@ public class ConversationActivity extends AppCompatActivity {
     @ViewById
     RecyclerView recyclerView;
 
+    @Bean
+    MessageAdapter messageAdapter;
+
     @AfterViews
     void init() {
         createMessageFragment.initFor(conversation);
@@ -37,5 +41,7 @@ public class ConversationActivity extends AppCompatActivity {
     private void initRecyclerView() {
         recyclerView.setLayoutManager(
                         new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        recyclerView.setAdapter(messageAdapter);
+        messageAdapter.initFor(conversation);
     }
 }

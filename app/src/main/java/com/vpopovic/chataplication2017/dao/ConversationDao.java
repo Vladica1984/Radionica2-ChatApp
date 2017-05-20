@@ -25,7 +25,7 @@ import java.util.Map;
 @EBean(scope = EBean.Scope.Singleton)
 public class ConversationDao {
 
-    public static final String CONVERSATION_TAG = "converssations";
+    static final String CONVERSATION_TAG = "converssations";
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -37,15 +37,13 @@ public class ConversationDao {
     OttoBus bus;
 
     @AfterInject
-    void Init() {
-
+    public void init() {
         database.getReference(CONVERSATION_TAG).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 conversationMap = dataSnapshot.getValue(
                         new GenericTypeIndicator<Map<String, Conversation>>() {
-                        }
-                );
+                        });
             publish();
             }
 

@@ -22,7 +22,7 @@ public abstract class RecyclerViewAdapterBase<T, V extends View> extends Recycle
 
     @Override
     public final ViewWrapper<V> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewWrapper<V>(onCreateItemView(parent, viewType));
+        return new ViewWrapper<>(onCreateItemView(parent, viewType));
     }
 
     protected abstract V onCreateItemView(ViewGroup parent, int viewType);

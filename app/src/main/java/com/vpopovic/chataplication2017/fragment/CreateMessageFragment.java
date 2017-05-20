@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.vpopovic.chataplication2017.R;
 import com.vpopovic.chataplication2017.dao.MessageDao;
+import com.vpopovic.chataplication2017.dao.UserDao;
 import com.vpopovic.chataplication2017.model.Conversation;
 import com.vpopovic.chataplication2017.model.Message;
 
@@ -28,6 +29,9 @@ public class CreateMessageFragment extends Fragment {
     @Bean
     MessageDao messageDao;
 
+    @Bean
+    UserDao userDao;
+
     @ViewById
     EditText messageText;
 
@@ -42,7 +46,7 @@ public class CreateMessageFragment extends Fragment {
             return;
         }
 
-        final Message message = new Message(text);
+        final Message message = new Message(userDao.getCurrentUser(), text);
         messageDao.write(message);
         messageText.setText("");
     }
